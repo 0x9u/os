@@ -1,3 +1,5 @@
+[org 0x7c00]
+
 	mov ah , 0x0e
 	mov bp, 0x8000
 	mov sp, bp
@@ -6,16 +8,16 @@
 	mov al, bl
 	int 0x10
 
-	mov di, msg
+	mov bx, msg
 	call print
 
-	mov bx, 'c'
+	mov bx, 'L'
 	mov al, bl
 	int 0x10
 
 	jmp $
 
-msg: db 10, "Baby gronk needs his milk", 13, 10, 0
+msg: db "Baby gronk needs his milk", 13, 10, 0
 
 %include "lib/io.asm"
 

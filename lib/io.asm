@@ -1,7 +1,7 @@
 ; 
 ; print
 ; Params:
-;  ax - address of string to print
+;  bx - address of string to print
 ; 
 
 print:
@@ -9,19 +9,18 @@ print:
 
 print_loop:
   
-  mov al, [di]
-  xor ah, ah
-  cmp al, 0
+  mov cx, [bx]
+
+  cmp cl, 0
   je print_loop_end
+
+  mov al, cl
   int 0x10
 
-  inc di
+  inc bx
   jmp print_loop
-print_loop_end:
 
-  mov bx, 'a'
-  mov al, bl
-  int 0x10
+print_loop_end:
 
   popa
   ret
