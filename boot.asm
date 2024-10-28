@@ -13,7 +13,6 @@
 
 	mov bx, 0x7e00 ; load 0x000
 	mov dh, 1
-	mov dl, [BOOT_DRIVE]
 	call disk_load
 
 	jmp $
