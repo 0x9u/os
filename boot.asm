@@ -13,8 +13,9 @@
 
 	mov bx, 0x7e00 ; load 0x000
 	mov dh, 1
-	mov dl, [BOOT_DRIVE]
 	call disk_load
+
+    call print_after_disk_load
 
 	jmp $
 
@@ -31,5 +32,14 @@ BOOT_DRIVE: db 0
 times 510-($-$$) db 0 ; make it 512 bytes so pc knows it's a boot sector
 dw 0xaa55 ; magic number
 
-times 256 dw 0xdada
-times 256 dw 0xface
+print_after_disk_load:
+    pusha
+
+    mov bx, oob_msg
+    call print
+
+    popa
+    ret
+
+oob_msg:
+    db "hi from sector 2", 13, 10, 0

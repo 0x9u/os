@@ -45,9 +45,6 @@ disk_load:
   jc disk_err_1 ; jmp if carry flag is set
   ; carry flag is used as general error
 
-  cmp dh, al ; if sectors read != sectors expected then error
-  jne disk_err_2
-  
   pop dx
   ret
 
