@@ -15,6 +15,8 @@
 	mov dh, 1
 	call disk_load
 
+    call print_after_disk_load
+
 	jmp $
 
 msg: db "Baby gronk needs his milk", 13, 10, 0
@@ -30,5 +32,14 @@ BOOT_DRIVE: db 0
 times 510-($-$$) db 0 ; make it 512 bytes so pc knows it's a boot sector
 dw 0xaa55 ; magic number
 
-times 256 dw 0xdada
-times 256 dw 0xface
+print_after_disk_load:
+    pusha
+
+    mov bx, oob_msg
+    call print
+
+    popa
+    ret
+
+oob_msg:
+    db "hi from sector 2", 13, 10, 0
