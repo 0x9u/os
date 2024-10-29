@@ -15,15 +15,18 @@
 	mov dh, 1
 	call disk_load
 
-    call print_after_disk_load
+  call print_after_disk_load
+
+	mov bx, a2_load_msg
+	call print
+
+	call enable_a20
+	call test_a20
 
 	jmp $
 
 msg: db "Baby gronk needs his milk", 13, 10, 0
 
-; Globals
-
-BOOT_DRIVE: db 0
 
 ; IMPORT HERE
 
