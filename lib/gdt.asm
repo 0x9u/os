@@ -10,28 +10,29 @@ setup_vga:
 setup_gdt:
 
 gdt_start:
-gdt_null: dq 0x0 ; used for null descriptor
+dd 0x0
+dd 0x0 ; used for null descriptor
 
 gdt_code:
 dw 0xffff ; limit (0-15 bits)
-dw 0x0 ; base (bits 0-15)
-db 0x0 ; base (bits 16 - 23)
+dw 0x0000 ; base (bits 0-15)
+db 0x00 ; base (bits 16 - 23)
 db 10011010b ; type flags 
 db 11001111b ; limit flags (16 - 19)
-db 0x0  ; base (bits 24-31)
+db 0x00  ; base (bits 24-31)
 
 gdt_data:
 dw 0xffff ; limit (0-15 bits)
-dw 0x0 ; base (bits 0-15)
+dw 0x0000 ; base (bits 0-15)
 db 0x0 ; base (bits 16 - 23)
-db 10011010b ; type flags 
+db 10010010b ; type flags 
 db 11001111b ; limit flags (16 - 19)
 db 0x0  ; base (bits 24-31)
 
 gdt_end:
 
 gdt_descriptor:
-dw  gdt_end - gdt_start - 1 ;  size of gdt is always 1 less
+dw  gdt_end - gdt_start ;  size of gdt is always 1 less
 dd  gdt_start
 
 CODE_SEG equ gdt_code - gdt_start

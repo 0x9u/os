@@ -27,7 +27,7 @@
 	
 	call switch_to_pm
 
-	jmp init_pm
+	jmp CODE_SEG:init_pm
 
 msg: db "Baby gronk needs his milk", 13, 10, 0
 msg2: db "Fanum tax", 13, 10, 0
@@ -41,9 +41,6 @@ dw 0xaa55 ; magic number
 
 second_segment_start:
 
-%include "lib/pm.asm"
-%include "lib/gdt.asm"
-
 print_after_disk_load:
     pusha
 
@@ -55,6 +52,10 @@ print_after_disk_load:
 
 oob_msg:
     db "hi from sector 2", 13, 10, 0
+
+%include "lib/gdt.asm"
+%include "lib/a2.asm"
+%include "lib/pm.asm"
 
 [bits 32]
 
@@ -74,8 +75,6 @@ init_pm: ; initialise segment registers
 	mov ebx, msg_init_pm
 	call print_string_pm
 
-	jmp $
-
 	call protected_mode ; never return here
 
 protected_mode:
@@ -83,7 +82,9 @@ protected_mode:
 	mov ebx, msg_pm
 	call print_string_pm
 
+	hlt
 	jmp $
+
 
 msg_init_pm: db "Successfully initialised protected mode", 13, 10, 0
 msg_pm: db "Successfully entered 32-bit protected mode", 13, 10, 0
@@ -91,3 +92,9 @@ msg_pm: db "Successfully entered 32-bit protected mode", 13, 10, 0
 %include "lib/io32.asm"
 
 times 510-($-second_segment_start) db 0 ; make it the 2nd sector
+
+third_sex:
+
+
+
+times 510-($-third_sex) db 0
