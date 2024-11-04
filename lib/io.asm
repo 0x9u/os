@@ -1,3 +1,4 @@
+;[bits 16]
 ; 
 ; print
 ; Params:
@@ -80,12 +81,12 @@ test_a20:
   mov ax, 0x0000
   mov es, ax
   mov byte [es:0x000000], 0x55
-  mov byte [es:0x000010], 0xAA
+  mov byte [es:0x001000], 0xAA
   
   cmp byte [es:0x000000], 0x55
   jne a2_test_err
 
-  cmp byte [es:0x000010], 0xAA
+  cmp byte [es:0x001000], 0xAA
   jne a2_test_err
 
   mov bx, a2_success_msg
